@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@import "antd/dist/reset.css";
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -12,12 +12,12 @@ body {
 }
 
 .active {
-  @apply font-semibold bg-[#2cbaa0] text-white shadow-md;
+  @apply font-semibold bg-[#2c52ba] text-white shadow-md;
   border-left: 4px solid #1a9b85;
 }
 
 .navlink {
-  @apply flex h-16 hover:bg-[#C4EDDE] items-center ps-6 transition-all duration-300 rounded-md mb-1 text-wrap cursor-pointer;
+  @apply flex h-16 hover:bg-[#3a57e88e] items-center ps-6 transition-all duration-300 rounded-md mb-1 text-wrap cursor-pointer;
 }
 
 .navlink:hover {

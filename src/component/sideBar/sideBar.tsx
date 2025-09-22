@@ -15,12 +15,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
-// Cấu hình FontAwesome để tránh bị mất icon khi chuyển trang
-import { config } from "@fortawesome/fontawesome-svg-core";
-import "@fortawesome/fontawesome-svg-core/styles.css";
-
-// Tắt auto-add CSS để tránh conflict với Next.js
-config.autoAddCss = false;
 function SideBar() {
   const links = [
     {
