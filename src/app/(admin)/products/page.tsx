@@ -2,6 +2,7 @@
 import type { TableColumnsType, TableProps } from "antd";
 import CustomTable from "@/component/CustomTable/customTable";
 import { useState } from "react";
+import FilterModal from "@/component/FilterModal/filterModal";
 interface DataType {
   key: React.Key;
   name: string;
@@ -89,6 +90,11 @@ export default function Products() {
   const handleSearch = () => {
     console.log(search);
   };
+
+  const [openFilter, setOpenFilter] = useState(false);
+  const handleOpenFilter = () => setOpenFilter(true);
+  const handleCloseFilter = () => setOpenFilter(false);
+  const handleClearFilter = () => {};
   return (
     <div className="frame">
       <CustomTable<DataType>
@@ -99,6 +105,14 @@ export default function Products() {
         search={search}
         setSearch={setSearch}
         handleSearch={handleSearch}
+        filterComponent={
+          <FilterModal
+            open={openFilter}
+            handleOpen={handleOpenFilter}
+            handleClose={handleCloseFilter}
+            handleClearFilter={handleClearFilter}
+          />
+        }
         placeholderSearch="Tìm kiếm theo tên sản phẩm"
         tableProps={{ pagination: { pageSize: 10, total: 30 } }}
       />
