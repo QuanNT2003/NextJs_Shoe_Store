@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Input, Button } from "antd";
+import { Table, Input } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
 
 export type SelectionType = "checkbox" | "radio";
@@ -13,7 +13,12 @@ export interface CustomTableProps<T extends { key: React.Key }> {
   placeholderSearch?: string;
   search?: string;
   setSearch?: (value: string) => void;
+  handleRowClick?: (record: T, rowIndex?: number) => void;
   handleSearch?: () => void;
+  handleSort?: (
+    column: { text: string },
+    sortDirection: "asc" | "desc"
+  ) => void;
   filterComponent?: React.ReactNode;
 }
 
@@ -22,18 +27,20 @@ const { Search } = Input;
 function CustomTable<T extends { key: React.Key }>({
   columns,
   data,
-  rowSelection,
+  // rowSelection,
   tableProps,
   searchVisibility,
   placeholderSearch,
   search,
   setSearch,
+  handleRowClick,
   handleSearch,
+  handleSort,
   filterComponent,
 }: CustomTableProps<T>) {
-  const resolvedRowSelection: TableProps<T>["rowSelection"] = rowSelection
-    ? { type: "checkbox", ...rowSelection }
-    : undefined;
+  // const resolvedRowSelection: TableProps<T>["rowSelection"] = rowSelection
+  //   ? { type: "checkbox", ...rowSelection }
+  //   : undefined;
 
   return (
     <div className="w-[100%] bg-white rounded-2xl p-5 select-none shadow-table">
@@ -59,7 +66,27 @@ function CustomTable<T extends { key: React.Key }>({
           <Table<T>
             columns={columns}
             dataSource={data}
-            rowSelection={resolvedRowSelection}
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: () => {
+                  handleRowClick?.(record, rowIndex);
+                },
+              };
+            }}
+            onChange={(_pagination, _filters, sorter, extra) => {
+              if (extra?.action !== "sort") return;
+              if (handleSort && sorter && !Array.isArray(sorter)) {
+                const { field, order } = sorter;
+                if (field && order) {
+                  handleSort(
+                    { text: field as string },
+                    order === "ascend" ? "asc" : "desc"
+                  );
+                }
+              }
+            }}
+            // rowSelection={resolvedRowSelection}
+            rowKey="key"
             {...tableProps}
           />
         </div>
