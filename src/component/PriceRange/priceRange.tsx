@@ -18,7 +18,7 @@ function PriceRange({ title, handleChange, value }: PriceRangeProps) {
     <div className="text-sm bg-white mb-5">
       <div className="font-medium mb-[3px]">{title}</div>
       <Slider
-        range
+        range={{ draggableTrack: false }}
         min={0}
         max={20000000}
         onChange={handleChange}
