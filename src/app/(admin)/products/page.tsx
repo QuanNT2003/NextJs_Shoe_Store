@@ -15,6 +15,7 @@ import LinkButton from "@/component/LinkButton/linkButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
+import PriceRange from "@/component/PriceRange/priceRange";
 type ProductQueryParams = {
   page: number;
   limit: number;
@@ -78,7 +79,23 @@ export default function Products() {
   const [selectedType, setSelectedType] = useState<string[]>([]);
   const [selectedCate, setSelectedCate] = useState<string[]>([]);
   const [selectedBrand, setSelectedBrand] = useState<string[]>([]);
+  // PriceRange
+  const [price, setPrice] = useState([0, 0]);
 
+  const handleChangePriceRange = (newValue: number[]) => {
+    // console.log(newValue);
+
+    setPrice(newValue);
+    // if (!Array.isArray(newValue)) {
+    //   return;
+    // }
+
+    // if (newValue[0] < newValue[1] - minDistance) {
+    //   setPrice([Math.min(newValue[0], price[1] - minDistance), price[1]]);
+    // } else {
+    //   setPrice([price[0], Math.max(newValue[1], price[0] + minDistance)]);
+    // }
+  };
   const [openFilter, setOpenFilter] = useState(false);
   const handleOpenFilter = () => setOpenFilter(true);
   const handleCloseFilter = () => setOpenFilter(false);
@@ -86,6 +103,7 @@ export default function Products() {
     setSelectedBrand([]);
     setSelectedCate([]);
     setSelectedType([]);
+    setPrice([0, 0]);
   };
   const handleFilter = async () => {
     setPage(1);
@@ -99,8 +117,8 @@ export default function Products() {
         search,
         selectedBrand,
         selectedCate,
-        selectedType
-        // price[1] === 0 ? '' : price
+        selectedType,
+        price[1] === 0 ? undefined : price
       )
     );
 
@@ -172,8 +190,8 @@ export default function Products() {
         search,
         selectedBrand,
         selectedCate,
-        selectedType
-        // price[1] === 0 ? '' : price
+        selectedType,
+        price[1] === 0 ? undefined : price
       )
     );
   };
@@ -194,8 +212,8 @@ export default function Products() {
         search,
         selectedBrand,
         selectedCate,
-        selectedType
-        // price[1] === 0 ? '' : price
+        selectedType,
+        price[1] === 0 ? undefined : price
       )
     );
   };
@@ -217,8 +235,8 @@ export default function Products() {
         search,
         selectedBrand,
         selectedCate,
-        selectedType
-        // price[1] === 0 ? '' : price
+        selectedType,
+        price[1] === 0 ? undefined : price
       )
     );
     handleCloseFilter();
@@ -341,6 +359,11 @@ export default function Products() {
                 options={optionsCate}
                 setSelected={setSelectedCate}
                 placeholder="Loại sản phẩm"
+              />
+              <PriceRange
+                value={price}
+                title="Giá bán"
+                handleChange={handleChangePriceRange}
               />
             </FilterModal>
           }

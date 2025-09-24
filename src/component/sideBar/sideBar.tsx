@@ -77,7 +77,7 @@ function SideBar() {
           <Link
             key={index}
             href={e.path}
-            className={pathname === e.path ? "navlink active" : "navlink"}
+            className={pathname.includes(e.path) ? "navlink active" : "navlink"}
             title={e.title}
           >
             <div className="flex items-center justify-center w-6 h-6 fa-icon">
